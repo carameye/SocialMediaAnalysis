@@ -111,6 +111,8 @@ MostVocal = list(twitterDf['user_screen_name'])
 user_counter = Counter(MostVocal)
 print(user_counter.most_common(1))
 
+# Part C: Word Cloud
+
 # A string of all the tweets (without stopwords) to be used in the wordcloud
 tweetsString = ' '.join(withoutStops)
 
@@ -126,7 +128,7 @@ plt.savefig(wordcloudFileName + '.png') # save as PNG file
 plt.savefig(wordcloudFileName + '.pdf') # save as PDF file
 plt.show() # show wordcloud
 
-# Part 4
+# Part D: Sentiment Analysis
 # 1. What are the average polarity and subjectivity scores?
 
 np.mean(list_for_polarity)
