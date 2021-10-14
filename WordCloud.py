@@ -117,10 +117,19 @@ retweetsOnly = twitterDF[twitterDf['is_retweet'] == True]
 # 5. Who is the most influential user? A user’s influence score is the sum of “source_user_followers_count”, “source_user_friends_count”,
 # “source_user_listed_count”, “source_user_favourites_count”.
 retweetsOnly['user_influence_score'] = retweetsOnly['source_user_followers_count'] + retweetsOnly['source_user_friends_count'] + retweetsOnly['source_user_listed_count'] + retweetsOnly['source_user_favourites_count']
+maxUserInfluenceScore = retweetsOnly['user_influence_score'].max()
+# Get user with max influence score
+maxUser = retweetsOnly[retweetsOnly['user_influence_score'] == maxUserInfluenceScore]
+print(maxUser['user_screen_name'])
 
 # 6. Which is the most influential retweet? A tweet’s influence score is the sum of “source_tweet_quote_count”, “source_tweet_reply_count”, 
 # “source_tweet_retweet_count”, “source_tweet_favorite_count”
 retweetsOnly['retweet_inflence_score'] = retweetsOnly['source_tweet_quote_count'] + retweetsOnly['source_tweet_reply_count'] + retweetsOnly['source_tweet_retweet_count'] + retweetsOnly['source_tweet_favorite_count']
+maxRetweetScore = retweetsOnly['retweet_inflence_score'].max()
+# Get tweet with max retweet score
+maxRetweet = retweetsOnly[retweetsOnly['retweet_inflence_score'] == maxRetweetScore]
+print(maxRetweet['tweet_text'])
+
 
 # Part C: Word Cloud
 
