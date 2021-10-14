@@ -159,4 +159,5 @@ tweetsPicked = 2 if numTweets > 1 else 1
 
 tweetPolSubj.sort(key=getPolarities)
 if numTweets > 0:
-    print(f'Most negative tweets {tweetPolSubj!r}')
+    print(f'Most negative tweets {tweetPolSubj[:tweetsPicked]!r}')
+    print(f'Most positive tweets {tweetPolSubj[-tweetsPicked:]}')
