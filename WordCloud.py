@@ -7,7 +7,6 @@ from collections import Counter
 
 from wordcloud import WordCloud
 from textblob import TextBlob
-from nltk.translate.meteor_score import wordnetsyn_match
 
 nltk.download('stopwords')
 # Get the English stopwords
@@ -112,23 +111,23 @@ user_counter = Counter(MostVocal)
 print(user_counter.most_common(1))
 
 # Subset retweets only
-retweetsOnly = twitterDF[twitterDf['is_retweet'] == True]
+retweetsOnly = twitterDf.loc[twitterDf['is_retweet'] == True, :].copy()
 
 # 5. Who is the most influential user? A user’s influence score is the sum of “source_user_followers_count”, “source_user_friends_count”,
 # “source_user_listed_count”, “source_user_favourites_count”.
-retweetsOnly['user_influence_score'] = retweetsOnly['source_user_followers_count'] + retweetsOnly['source_user_friends_count'] + retweetsOnly['source_user_listed_count'] + retweetsOnly['source_user_favourites_count']
+retweetsOnly.loc[:,'user_influence_score'] = retweetsOnly['source_user_followers_count'] + retweetsOnly['source_user_friends_count'] + retweetsOnly['source_user_listed_count'] + retweetsOnly['source_user_favourites_count']
 maxUserInfluenceScore = retweetsOnly['user_influence_score'].max()
 # Get user with max influence score
-maxUser = retweetsOnly[retweetsOnly['user_influence_score'] == maxUserInfluenceScore]
-print(maxUser['user_screen_name'])
+maxUser = retweetsOnly.loc[retweetsOnly['user_influence_score'] == maxUserInfluenceScore, :]
+print('The Twitter user with maximum influence is: ' + str(maxUser['user_screen_name'].iloc[0]))
 
 # 6. Which is the most influential retweet? A tweet’s influence score is the sum of “source_tweet_quote_count”, “source_tweet_reply_count”, 
 # “source_tweet_retweet_count”, “source_tweet_favorite_count”
-retweetsOnly['retweet_inflence_score'] = retweetsOnly['source_tweet_quote_count'] + retweetsOnly['source_tweet_reply_count'] + retweetsOnly['source_tweet_retweet_count'] + retweetsOnly['source_tweet_favorite_count']
-maxRetweetScore = retweetsOnly['retweet_inflence_score'].max()
+retweetsOnly.loc[:,'retweet_influence_score'] = retweetsOnly['source_tweet_quote_count'] + retweetsOnly['source_tweet_reply_count'] + retweetsOnly['source_tweet_retweet_count'] + retweetsOnly['source_tweet_favorite_count']
+maxRetweetScore = retweetsOnly['retweet_influence_score'].max()
 # Get tweet with max retweet score
-maxRetweet = retweetsOnly[retweetsOnly['retweet_inflence_score'] == maxRetweetScore]
-print(maxRetweet['tweet_text'])
+maxRetweet = retweetsOnly.loc[retweetsOnly['retweet_influence_score'] == maxRetweetScore,:]
+print('The retweet with maximum influence is: "' + str(maxRetweet['tweet_text'].iloc[0]) + '"')
 
 
 # Part C: Word Cloud
