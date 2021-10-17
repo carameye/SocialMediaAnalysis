@@ -184,7 +184,7 @@ plt.savefig('subjectivity.pdf')
 plt.show()
 
 # 3. Based on the polarity scores, what are the most positive and negative tweets on the keyword?
-#    Why is the author happy/angry on the topic? If there are multiple tweets, please pick 2-3 tweets among them.
+# Why is the author happy/angry on the topic? If there are multiple tweets, please pick 2-3 tweets among them.
 
 # sort the tweets based on polarity
 tweetsWithPolarity.sort(key=getPolarities)
@@ -194,13 +194,16 @@ if numTweets > 0:
     # helper function: if there's only one most positve or negatie tweet, pick that one.
     # Otherwise, there are multiple most positve or negative tweets--pick the 2 tweets among them.
     def tweetsToPick(startingIndex):
-        mostPosOrNegTweet = tweetsWithPolarity[startingIndex]
+        numPicked = 1
+        if numTweets > 1:
+            mostPosOrNegTweet = tweetsWithPolarity[startingIndex]
 
-        # if startingIndex == 0, then get the next most positive tweet at index 1
-        # otherwise starting index is -1 and get the next most negative tweet at index -2
-        nextTweet = tweetsWithPolarity[1 if startingIndex == 0 else -2]
+            # if startingIndex == 0, then get the next most positive tweet at index 1
+            # # otherwise starting index is -1 and get the next most negative tweet at index -2
+            nextTweet = tweetsWithPolarity[1 if startingIndex == 0 else -2]
+            numPicked = 2 if mostPosOrNegTweet['pol'] == nextTweet['pol'] else 1
 
-        return 2 if  numTweets > 1 and mostPosOrNegTweet['pol'] == nextTweet['pol'] else 1
+        return  numPicked
 
     # display the most negative tweet(s)
     negTweetsPicked = tweetsToPick(0)
